@@ -50,8 +50,24 @@ extension=php_redis.dll
 
 * 2、linux 版本安装
 
-```
+> 到 redis 官网下载 redis（自己选择下载版本） [下载地址](https://redis.io/download)
+> 下载源码，解压后编译源码
+> 安装成功后，运行 redis 服务，就可以使用（不要关闭）
 
+```
+$ wget http://download.redis.io/releases/redis-3.2.9.tar.gz
+$ tar xzf redis-3.2.9.tar.gz
+$ cd redis-3.2.9
+$ make
+
+$ src/redis-server # 直接运行服务
+# 另外打开一个终端
+[zheng@iZ94fxluii0Z redis-3.2.9]$ src/redis-cli 
+127.0.0.1:6379> set foo bar
+OK
+127.0.0.1:6379> get foo
+"bar"
+127.0.0.1:6379>
 ```
 
 ### 2、php-redis 使用
