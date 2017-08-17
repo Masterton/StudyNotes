@@ -91,6 +91,20 @@ curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
+> 新建linux用户并赋予sudo权限
+
+```
+# 在root用户下新建用户
+adduser zheng
+# 修改/etc/sudoers文件，进入超级用户，因为没有写权限，所以要先把写权限加上
+chmod u+w /etc/sudoers
+vim /etc/sudoers
+# 找到这一 行："root ALL=(ALL) ALL"在起下面添加"
+zhc ALL=(ALL) ALL # (这里的zhc是你的用户名)，然后保存。
+# 最后恢复没有写权限模式，撤销文件的写权限
+chmod u-w /etc/sudoers
+```
+
 ```
 apache目录结构
 ├── apache2.conf #apache住配置文件
