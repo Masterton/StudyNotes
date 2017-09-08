@@ -1,6 +1,6 @@
 # php-redis
 
-### 1、php-redis 安装
+### 1、redis 安装
 
 * 1、windows 版本安装
 
@@ -48,7 +48,7 @@ extension=php_igbinary.dll
 extension=php_redis.dll
 ```
 
-* 2、linux 版本安装
+* 2、linux 版本安装(Ubuntu)
 
 > 到 redis 官网下载 redis（自己选择下载版本） [下载地址](https://redis.io/download)
 > 下载源码，解压后编译源码
@@ -56,7 +56,7 @@ extension=php_redis.dll
 
 ```
 $ wget http://download.redis.io/releases/redis-3.2.9.tar.gz
-$ tar xzf redis-3.2.9.tar.gz
+$ tar xzf redis-3.2.9.tar.gz # tar.gz 文件解压
 $ cd redis-3.2.9
 $ make
 
@@ -68,6 +68,29 @@ OK
 127.0.0.1:6379> get foo
 "bar"
 127.0.0.1:6379>
+```
+
+> 安装 php-redis 扩展
+
+```
+# 1、在[下载适合自己php版本的php-redis版本](http://pecl.php.net/package/redis)
+wget -c http://pecl.php.net/get/redis-3.1.3.tgz
+tar xvf redis-3.1.3.tgz # tgz 文件解压
+cd redis-3.1.3
+# 调用 phpize 程序生成编译配置文件
+zheng@iZwz9i0q74l7rt467ggyz2Z:~/www/php-redis-3.1.3$ phpize
+Configuring for:
+PHP Api Version:         20151012
+Zend Module Api No:      20151012
+Zend Extension Api No:   320151012
+# 编译扩展库
+php-config # 查看php-config 的路径是什么
+root@iZwz9i0q74l7rt467ggyz2Z:/usr/local/src# php-config
+Usage: /usr/bin/php-config [OPTION]
+
+# 使用 make 编译安装
+make && make install
+# 使用 make-test 测试安装是否成功
 ```
 
 ### 2、php-redis 使用
