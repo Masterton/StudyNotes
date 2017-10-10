@@ -70,14 +70,14 @@ OK
 127.0.0.1:6379>
 ```
 
-> 安装 php-redis 扩展
+> 安装 php-redis 扩展[参考](http://blog.csdn.net/wkupaochuan/article/details/8627304)
 
 ```
 # 1、在[下载适合自己php版本的php-redis版本](http://pecl.php.net/package/redis)
 wget -c http://pecl.php.net/get/redis-3.1.3.tgz
 tar xvf redis-3.1.3.tgz # tgz 文件解压
 cd redis-3.1.3
-# 调用 phpize 程序生成编译配置文件
+# 调用 phpize 程序生成编译配置文件 configure 配置文件
 zheng@iZwz9i0q74l7rt467ggyz2Z:~/www/php-redis-3.1.3$ phpize
 Configuring for:
 PHP Api Version:         20151012
@@ -88,9 +88,15 @@ php-config # 查看php-config 的路径是什么
 root@iZwz9i0q74l7rt467ggyz2Z:/usr/local/src# php-config
 Usage: /usr/bin/php-config [OPTION]
 
-# 使用 make 编译安装
+# 把 redis 的配置信息写入 php-config中
+./configure --with-php-config=/usr/bin/php-config # php-config 对应的地址
+# 之后，使用 make 编译安装
 make && make install
 # 使用 make-test 测试安装是否成功
+
+# 最后在 php.ini 的最后面加入
+[redis]
+extension="redis.so"
 ```
 
 ### 2、php-redis 使用
