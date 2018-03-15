@@ -160,4 +160,7 @@ sync_binlog=1
 binlog_format=MIXED # 混合模式复制
 expire_logs_days=7 # binlog过期清理时间
 max_binlog_size=20M # binlog每个日志文件大小
+
+# 需要同步的库中的表 库名.表名
+replicate-do-table=wishrp.sku_map
 ```
