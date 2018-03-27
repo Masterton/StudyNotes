@@ -163,4 +163,7 @@ max_binlog_size=20M # binlog每个日志文件大小
 
 # 需要同步的库中的表 库名.表名
 replicate-do-table=wishrp.sku_map
+
+# 需要忽略的库中的表 库名.表名
+replicate-ignore-db=wishrp.sku_map
 ```
