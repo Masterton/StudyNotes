@@ -74,24 +74,51 @@ OK
 
 ```
 # 1、在[下载适合自己php版本的php-redis版本](http://pecl.php.net/package/redis)
-wget -c http://pecl.php.net/get/redis-3.1.3.tgz
-tar xvf redis-3.1.3.tgz # tgz 文件解压
-cd redis-3.1.3
+wget -c http://pecl.php.net/get/redis-4.0.1.tgz
+tar xvf redis-4.0.1.tgz # tgz 文件解压
+cd redis-4.0.1
+
+
 # 调用 phpize 程序生成编译配置文件 configure 配置文件
 zheng@iZwz9i0q74l7rt467ggyz2Z:~/www/php-redis-3.1.3$ phpize
 Configuring for:
 PHP Api Version:         20151012
 Zend Module Api No:      20151012
 Zend Extension Api No:   320151012
+
+
 # 编译扩展库
+# 这里需要特别注意，一定要把用户切换到root权限，只有root权限在下面redis编译安装时才能把redis.so 文件写入php扩展文件夹 /usr/lib/php/20151012
 php-config # 查看php-config 的路径是什么
-root@iZwz9i0q74l7rt467ggyz2Z:/usr/local/src# php-config
+# Usage： 就是 php-config 的路径
+# --extension-dir 就是生成的 redis.so 写入php扩展的文件夹
+
+root@iZbp1bdm1m8u064es7jt23Z:~/www/redis-4.0.1# php-config
 Usage: /usr/bin/php-config [OPTION]
+Options:
+  --prefix            [/usr]
+  --includes          [-I/usr/include/php/20151012 -I/usr/include/php/20151012/main -I/usr/include/php/20151012/TSRM -I/usr/include/php/20151012/Zend -I/usr/include/php/20151012/ext -I/usr/include/php/20151012/ext/date/lib ]
+  --ldflags           [-L/usr/lib/php/20151012  -L/usr/lib/x86_64-linux-gnu]
+  --libs              [-lcrypt   -lresolv -lcrypt -lz -lpcre -lrt -lm -ldl -lnsl  -lxml2 -lssl -lcrypto -lcrypt -lcrypt ]
+  --extension-dir     [/usr/lib/php/20151012]
+  --include-dir       [/usr/include/php/20151012]
+  --man-dir           [/usr/share/man]
+  --php-binary        [/usr/bin/php7.0]
+  --php-sapis         [apache2handler cgi cli fpm ]
+  --phpapi            [20151012]
+  --configure-options [--includedir=/usr/include --mandir=/usr/share/man --infodir=/usr/share/info --disable-silent-rules --libdir=/usr/lib/x86_64-linux-gnu --libexecdir=/usr/lib/x86_64-linux-gnu --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-cli --disable-cgi --disable-phpdbg --with-config-file-path=/etc/php/7.0/cli --with-config-file-scan-dir=/etc/php/7.0/cli/conf.d --build=x86_64-linux-gnu --host=x86_64-linux-gnu --config-cache --cache-file=/build/php7.0-Wn7UbP/php7.0-7.0.28/config.cache --libdir=${prefix}/lib/php --libexecdir=${prefix}/lib/php --datadir=${prefix}/share/php/7.0 --program-suffix=7.0 --sysconfdir=/etc --localstatedir=/var --mandir=/usr/share/man --disable-all --disable-debug --disable-rpath --disable-static --with-pic --with-layout=GNU --without-pear --enable-filter --with-openssl=yes --with-pcre-regex=/usr --enable-hash --with-mhash=/usr --enable-libxml --enable-session --with-system-tzdata --with-zlib=/usr --with-zlib-dir=/usr --enable-dtrace --enable-pcntl --with-libedit=shared,/usr build_alias=x86_64-linux-gnu host_alias=x86_64-linux-gnu CFLAGS=-g -O2 -fPIE -fstack-protector-strong -Wformat -Werror=format-security -O2 -Wall -pedantic -fsigned-char -fno-strict-aliasing -g]
+  --version           [7.0.28-0ubuntu0.16.04.1]
+  --vernum            [70028]
+
 
 # 把 redis 的配置信息写入 php-config中
 ./configure --with-php-config=/usr/bin/php-config # php-config 对应的地址
+
+
 # 之后，使用 make 编译安装
 make && make install
+
+
 # 使用 make-test 测试安装是否成功
 
 # 最后在 php.ini 的最后面加入
