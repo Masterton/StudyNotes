@@ -61,6 +61,10 @@ $ cd redis-3.2.9
 $ make
 
 $ src/redis-server # 直接运行服务[设置后台运行redis](http://blog.csdn.net/ksdb0468473/article/details/52126009)
+
+# 后台运行设置，打开redis.conf 找到 daemonize no 改为
+daemonize yes
+
 # 另外打开一个终端
 [zheng@iZ94fxluii0Z redis-3.2.9]$ src/redis-cli 
 127.0.0.1:6379> set foo bar
