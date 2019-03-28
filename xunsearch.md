@@ -159,3 +159,45 @@ print_r($words1);
 print_r($words2);
 exit;
 ```
+
+### 安装过程出现的错误
+
+* 这是 libevent 与 openssl 版本不兼容导致
+* 它们的版本关系是这样的
+| libevent    | openssl   |
+| :-------    | :-------- |
+| 2.1.x       | 1.1       |
+| 2.0.x       | 1.0       |
+
+* 有两个选择
+
+> 使用 libevent 2.1.x 版本，这与你本机的 openssl 1.1 匹配，无需任何修改直接编译即可。
+> 使用 libevent 2.0.x 版本，你需要安装 openssl 1.0 版本，然后在编译时指定链接版本。
+
+> 下面针对第二种选择做详细说明，这种方法是通用的，适用于编译其他软件时出现版本不兼容问题。
+
+> 首先安装 openssl 1.0 版本，注意需要头文件。你可以选择从源码安装，或使用操作系统的仓库下载安装。
+> 这类安装包通常带有 "*-dev" 字样，比如 centos 发行版可能是这样的
+
+```
+yum install openssl-devel-1.0xxx
+```
+> openssl 安装完成后，会有一个 pkgconfig/ 目录，实际路径取决于你上一步的操作，一般位于 /usr/lib 或 /usr/local/lib 下。
+> 这里我们假设是 /usr/local/lib/openssl-1.0/pkgconfig/， 你需要将它设置成 PKG_CONFIG_PATH 的环境变量值，如
+
+```
+export PKG_CONFIG_PATH=/usr/local/lib/openssl-1.0/pkgconfig/
+```
+
+> 切换到 libevent 源码目录，把 openssl 头文件路径，及库文件路径加入 configure 配置变量，如
+
+```
+./configure CFLAGS="$(pkg-config --cflags openssl)" LDFLAGS="$(pkg-config --libs openssl)"
+```
+
+> 清除原内容，并重新编译即可
+
+```
+make clean
+make -j8
+```
