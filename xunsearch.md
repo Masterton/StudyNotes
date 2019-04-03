@@ -201,3 +201,9 @@ export PKG_CONFIG_PATH=/usr/local/lib/openssl-1.0/pkgconfig/
 make clean
 make -j8
 ```
+
+> 修改setup.sh文件，安装libevent是不安装openssl扩展 334 行
+```
+- ./configure --prefix=$prefix >> ../setup.log 2>&1
++ ./configure --prefix=$prefix --disable-openssl >> ../setup.log 2>&1
+```
