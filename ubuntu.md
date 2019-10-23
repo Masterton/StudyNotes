@@ -61,6 +61,14 @@ GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'youpassword' WITH GRANT
 FLUSH PRIVILEGES;
 # 卸载mysql及依赖
 apt purge mysql-*
+
+# 重新设置密码，解决不用密码也能登录
+use mysql;
+update user set authentication_string=PASSWORD("密码") where user='root';
+update user set plugin="mysql_native_password";
+flush privileges;
+quit;
+systemctl restart mysql.service;
 ```
 
 > 6、开启需要的端口
