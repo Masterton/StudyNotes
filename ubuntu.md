@@ -69,6 +69,9 @@ update user set plugin="mysql_native_password";
 flush privileges;
 quit;
 systemctl restart mysql.service;
+
+# 导入slq.gz文件
+gunzip < dbname.gz | mysql -u Username -p dbname
 ```
 
 > 6、开启需要的端口
