@@ -72,6 +72,53 @@ systemctl restart mysql.service;
 
 # 导入slq.gz文件
 gunzip < dbname.gz | mysql -u Username -p dbname
+
+
+# 最新安装的 mysql8.0 安装的时候没有设置密码的
+# 1.查看密码
+sudo cat /etc/mysql/debian.cnf
+
+root@iZbp18lo7swichwrkdi1w3Z:/# cat /etc/mysql/debian.cnf 
+# Automatically generated for Debian scripts. DO NOT TOUCH!
+[client]
+host     = localhost
+user     = debian-sys-maint
+password = RONL9BWwzI2DCUlN
+socket   = /var/run/mysqld/mysqld.sock
+[mysql_upgrade]
+host     = localhost
+user     = debian-sys-maint
+password = RONL9BWwzI2DCUlN
+socket   = /var/run/mysqld/mysqld.sock
+
+# 2.利用 debian-sys-maint 账户登录Mysql
+mysql -udebian-sys-maint -p
+
+# 3.查看user表信息：
+use mysql;
+select user,host,authentication_string from user;
+
+mysql> select user,host,authentication_string from user;
++------------------+-----------+------------------------------------------------------------------------+
+| user             | host      | authentication_string                                                  |
++------------------+-----------+------------------------------------------------------------------------+
+| debian-sys-maint | localhost | $A$005$(,r_ECkBpFj+4Dq\IewpEHTM/84kaYf77inQP3eNzcrwfvHlJwxHBOGggHr6 |
+| mysql.infoschema | localhost | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED |
+| mysql.session    | localhost | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED |
+| mysql.sys        | localhost | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED |
+| root             | localhost |                                                                        |
++------------------+-----------+------------------------------------------------------------------------+
+5 rows in set (0.00 sec)
+
+# 可以明显看到，root账户存在但密码为空。
+
+# 4、修改密码：
+alter user 'root'@'localhost' identified with mysql_native_password by 'mysql'; # 修改密码为 mysql
+flush privileges; # 重新加载权限表
+
+# 5、退出mysql重新登录
+quit;
+mysql -uroot -p
 ```
 
 > 6、开启需要的端口
