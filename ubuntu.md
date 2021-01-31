@@ -28,6 +28,13 @@ zheng@zheng-virtual-machine:/$ ps -e | grep sshd
 /etc/init.d/ssh start # 启动服务
 # 查看ssh默认配置(默认服务端口是22)
 root@ubuntu:/etc/ssh# more ssh_config
+
+# ubuntu20.04版本高了之后，使用ssh连接服务器报错
+
+vim /etc/ssh/sshd_config
+
+# 把下面这句加入到末尾，重启ssh-server服务就可以了
+KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group1-sha1
 ```
 
 > 3、安装 apache2
@@ -45,6 +52,8 @@ dpkg -l # 查看安装的所有包
 apt-cache search php7.0 # 查看php7.0的安装包有那些
 # 安装php7.0 和扩展
 sudo apt-get install php7.0 php7.0-fpm php7.0-gd php7.0-curl php7.0-mysql php7.0-pdo php7.0-mcrypt php7.0-mbstring php7.0-common php7.0-ldap php7.0-cli php7.0-dev php7.0-json
+# 安装php7.4 和扩展
+apt-get install php7.4 php7.4-fpm php7.4-gd php7.4-curl php7.4-mysql php7.4-pdo php7.4-mbstring php7.4-common php7.4-ldap php7.4-cli php7.4-dev php7.4-json
 # 注意：此时是无法解析PHP网页的，因为没有安装apache php module
 apt-get install libapache2-mod-php7.0
 ```
