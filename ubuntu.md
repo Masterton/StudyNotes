@@ -81,6 +81,12 @@ systemctl restart mysql.service;
 
 # 导入slq.gz文件
 gunzip < dbname.gz | mysql -u Username -p dbname
+gzip -d < aaa.sql.gz | mysql -uroot -p aaa
+
+# 新版mysql8.0 group 报错
+# 找到 [mysqld]，在下一行加上下面的内容
+[mysqld]
+sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
 
 
 # 最新安装的 mysql8.0 安装的时候没有设置密码的
