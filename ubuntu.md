@@ -56,6 +56,32 @@ sudo apt-get install php7.0 php7.0-fpm php7.0-gd php7.0-curl php7.0-mysql php7.0
 apt-get install php7.4 php7.4-fpm php7.4-gd php7.4-curl php7.4-mysql php7.4-pdo php7.4-mbstring php7.4-common php7.4-ldap php7.4-cli php7.4-dev php7.4-json
 # 注意：此时是无法解析PHP网页的，因为没有安装apache php module
 apt-get install libapache2-mod-php7.0
+
+
+# Ubuntu彻底删除PHP7.0的方法
+# Ubuntu彻底删除PHP的方法：首先通过命令“sudo apt-get autoremove php7*”删除php的相关包及配置；然后删除关联；接着清除dept列表；最后检查是否卸载干净即可。
+# 一、删除php的相关包及配置
+sudo apt-get autoremove php7*
+# 二、删除关联
+sudo find /etc -name "*php*" |xargs  rm -rf
+三、清除dept列表
+sudo apt purge `dpkg -l | grep php| awk '{print $2}' |tr "\n" " "`
+四、检查是否卸载干净（无返回就是卸载完成）
+dpkg -l | grep php7.0
+
+
+# 安装以前的PHP版本
+# Debian开发人员OndřejSurý维护着一个包含多个PHP版本的存储库。要启用存储库，请运行：
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:ondrej/php
+
+# 可以查询一下PHP有哪些安装版本
+apt-cache search php7
+
+# 现在，您可以通过在软件包名称后附加版本号来安装所需的ant PHP版本：
+sudo apt install php[version]
+# 例如，要安装PHP 7.1和一些常见的PHP模块，可以运行：
+sudo apt install php7.1 php7.1-common php7.1-opcache php7.1-mcrypt php7.1-cli php7.1-gd php7.1-curl php7.1-mysql
 ```
 
 > 5、安装mysql
@@ -87,6 +113,10 @@ gzip -d < aaa.sql.gz | mysql -uroot -p aaa
 # 找到 [mysqld]，在下一行加上下面的内容
 [mysqld]
 sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+# php7.0链接捏mysql8.0报错：The server requested authentication method unknown to the client
+# 是因为mysql8.0使用了新的密码验证插件：caching_sha2_password,而在php7.0并不支持这种方式。
+# 所以找到 [mysqld]，在下一行加上下面的内容
+default_authentication_plugin=mysql_native_password
 
 
 # 最新安装的 mysql8.0 安装的时候没有设置密码的
