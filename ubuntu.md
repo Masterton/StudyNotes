@@ -46,14 +46,31 @@ sudo apt-get install apache2
 > 4、安装php
 
 ```
+# 参考链接 https://www.1818ip.com/post/3998.html
+# 更新Ubuntu 首先，更新你的Ubuntu服务器：
+apt-get update && apt-get upgrade
+# 添加PHP存储库 要安装PHP 7.4，需要使用第三方存储库。我们将使用以前再次使用的OndřejSurý的存储库。
+apt-get install software-properties-common
+# 接下来，从Ondřej添加PHP存储库：
+add-apt-repository ppa:ondrej/php
+# 最后，更新安装包：
+apt-get update
 # 查看安装的包
 dpkg -l | grep php # 查看安装的php包
 dpkg -l # 查看安装的所有包
 apt-cache search php7.0 # 查看php7.0的安装包有那些
 # 安装php7.0 和扩展
 sudo apt-get install php7.0 php7.0-fpm php7.0-gd php7.0-curl php7.0-mysql php7.0-pdo php7.0-mcrypt php7.0-mbstring php7.0-common php7.0-ldap php7.0-cli php7.0-dev php7.0-json
+# 安装php7.1 和扩展
+sudo apt-get install php7.1 php7.1-fpm php7.1-gd php7.1-curl php7.1-mysql php7.1-pdo php7.1-mcrypt php7.1-mbstring php7.1-common php7.1-ldap php7.1-cli php7.1-dev php7.1-json
+# 安装php7.2 和扩展
+sudo apt-get install php7.2 php7.2-fpm php7.2-gd php7.2-curl php7.2-mysql php7.2-pdo php7.2-mcrypt php7.2-mbstring php7.2-common php7.2-ldap php7.2-cli php7.2-dev php7.2-json
+# 安装php7.3 和扩展
+sudo apt-get install php7.3 php7.3-fpm php7.3-gd php7.3-curl php7.3-mysql php7.3-pdo php7.3-mcrypt php7.3-mbstring php7.3-common php7.3-ldap php7.3-cli php7.3-dev php7.3-json
 # 安装php7.4 和扩展
 apt-get install php7.4 php7.4-fpm php7.4-gd php7.4-curl php7.4-mysql php7.4-pdo php7.4-mbstring php7.4-common php7.4-ldap php7.4-cli php7.4-dev php7.4-json
+# 安装php8.0 和扩展
+sudo apt-get install php8.0 php8.0-fpm php8.0-gd php8.0-curl php8.0-mysql php8.0-pdo php8.0-mcrypt php8.0-mbstring php8.0-common php8.0-ldap php8.0-cli php8.0-dev php8.0-json
 # 注意：此时是无法解析PHP网页的，因为没有安装apache php module
 apt-get install libapache2-mod-php7.0
 ```
